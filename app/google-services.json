@@ -1,35 +1,35 @@
 {
   "project_info": {
-    "project_number": "675854580794",
-    "firebase_url": "https://fir-instachat.firebaseio.com",
-    "project_id": "fir-instachat",
-    "storage_bucket": "fir-instachat.appspot.com"
+    "project_number": "806586166731",
+    "firebase_url": "https://friendlychat-1f1b2.firebaseio.com",
+    "project_id": "friendlychat-1f1b2",
+    "storage_bucket": "friendlychat-1f1b2.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:675854580794:android:71d927a57f9874ca",
+        "mobilesdk_app_id": "1:806586166731:android:b5d75907de594a2d",
         "android_client_info": {
-          "package_name": "ch.juventus.bs.firebaseinstachat"
+          "package_name": "com.google.firebase.codelab.friendlychat"
         }
       },
       "oauth_client": [
         {
-          "client_id": "675854580794-tjpfo9sagpvs2mfn91c82iglb5954cfb.apps.googleusercontent.com",
+          "client_id": "806586166731-li15fvueke0gogfvouae2ios52ejp5b7.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "ch.juventus.bs.firebaseinstachat",
-            "certificate_hash": "C031891BAF9E5277CAA03F14C27F88D98D9570D4"
+            "package_name": "com.google.firebase.codelab.friendlychat",
+            "certificate_hash": "6532C6780665F29FA34812361045FE36D0AA3DFA"
           }
         },
         {
-          "client_id": "675854580794-0ots1supaqob3ujn3i9jt3uk0jl0gljs.apps.googleusercontent.com",
+          "client_id": "806586166731-jc1lhgnrspiu658hs4juinrtmoq7jc0k.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyA-0pgE3EjFyhjwQec7YiVl7DF8wzgk_U8"
+          "current_key": "AIzaSyCEh_k5V2WbNztwmcM7EMMlYUl_e9FoH5k"
         }
       ],
       "services": {
@@ -40,7 +40,51 @@
           "status": 2,
           "other_platform_oauth_client": [
             {
-              "client_id": "675854580794-0ots1supaqob3ujn3i9jt3uk0jl0gljs.apps.googleusercontent.com",
+              "client_id": "806586166731-jc1lhgnrspiu658hs4juinrtmoq7jc0k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:806586166731:android:71d927a57f9874ca",
+        "android_client_info": {
+          "package_name": "ch.juventus.bs.firebaseinstachat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "806586166731-u32pnebgiv9933ujv8d5iok8rqj7lac5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ch.juventus.bs.firebaseinstachat",
+            "certificate_hash": "6532C6780665F29FA34812361045FE36D0AA3DFA"
+          }
+        },
+        {
+          "client_id": "806586166731-jc1lhgnrspiu658hs4juinrtmoq7jc0k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCEh_k5V2WbNztwmcM7EMMlYUl_e9FoH5k"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "806586166731-jc1lhgnrspiu658hs4juinrtmoq7jc0k.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

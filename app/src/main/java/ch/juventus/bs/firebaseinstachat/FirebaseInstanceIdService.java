@@ -1,7 +1,7 @@
 package ch.juventus.bs.firebaseinstachat;
 
 /**
- * Created by root on 30.10.16.
+ * Created by root on 30.10.16.d
  */
 
 public class FirebaseInstanceIdService {
