@@ -1,5 +1,6 @@
 package ch.juventus.bs.firebaseinstachat;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -9,6 +10,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -26,14 +28,15 @@ public class UserOverview extends AppCompatActivity {
     private ProgressBar mProgressBar;
     private LinearLayoutManager mLinearLayoutManager;
     private RecyclerView mMessageRecyclerView;
+    private Button userButton;
 
     public static class UserViewHolder extends RecyclerView.ViewHolder {
-        public TextView userTextView;
         public CircleImageView userImageView;
+        public Button userButton;
 
         public UserViewHolder(View v) {
             super(v);
-            userTextView = (TextView) itemView.findViewById(R.id.userTextView);
+            userButton = (Button) itemView.findViewById(R.id.userButton);
             userImageView = (CircleImageView) itemView.findViewById(R.id.userImageView);
         }
     }
@@ -67,7 +70,7 @@ public class UserOverview extends AppCompatActivity {
             protected void populateViewHolder(UserOverview.UserViewHolder viewHolder,
                                               User friendlyUser, int position) {
                 mProgressBar.setVisibility(ProgressBar.INVISIBLE);
-                viewHolder.userTextView.setText(friendlyUser.getEmail());
+                viewHolder.userButton.setText(friendlyUser.getEmail());
                 if (friendlyUser.getPhotoUrl() == null) {
                     viewHolder.userImageView
                             .setImageDrawable(ContextCompat
@@ -101,6 +104,16 @@ public class UserOverview extends AppCompatActivity {
 
         mMessageRecyclerView.setLayoutManager(mLinearLayoutManager);
         mMessageRecyclerView.setAdapter(mFirebaseAdapter);
+
+        userButton = (Button) findViewById(R.id.userButton);
+        userButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                startActivity(new Intent(UserOverview.this, MainActivity.class));
+                finish();
+            }
+        });
 
     }
 
