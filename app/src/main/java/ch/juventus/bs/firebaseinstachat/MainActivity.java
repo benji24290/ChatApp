@@ -184,10 +184,11 @@ public class MainActivity extends AppCompatActivity
         mSendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 Message message = new
                         Message(mMessageEditText.getText().toString(),
                         mUsername,
-                        mPhotoUrl);
+                        mPhotoUrl,mFirebaseUser.getUid());
                 mFirebaseDatabaseReference.child(MESSAGES_CHILD)
                         .push().setValue(message);
                 mMessageEditText.setText("");
