@@ -205,6 +205,10 @@ public class MainActivity extends AppCompatActivity
 
         mFirebaseDatabaseReference.child("user/"+user.getUid())
                 .setValue(user);
+
+        startActivity(new Intent(this, UserOverview.class));
+        finish();
+        return;
     }
 
     @Override
