@@ -104,6 +104,7 @@ public class UserOverview extends AppCompatActivity {
         mMessageRecyclerView.setLayoutManager(mLinearLayoutManager);
         mMessageRecyclerView.setAdapter(mFirebaseAdapter);
 
+
     }
 
 }
