@@ -203,8 +203,8 @@ public class MainActivity extends AppCompatActivity
                 User(mFirebaseUser.getUid(),
                 mFirebaseUser.getEmail());
 
-        mFirebaseDatabaseReference.child("user")
-                .push().setValue(user);
+        mFirebaseDatabaseReference.child("user/"+user.getUid())
+                .setValue(user);
     }
 
     @Override
