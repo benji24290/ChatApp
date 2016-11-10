@@ -69,7 +69,7 @@ public class UserOverview extends AppCompatActivity {
             protected void populateViewHolder(UserOverview.UserViewHolder viewHolder,
                                               User friendlyUser, int position) {
                 mProgressBar.setVisibility(ProgressBar.INVISIBLE);
-                viewHolder.userButton.setText(friendlyUser.getEmail());
+                viewHolder.userButton.setText(friendlyUser.getName());
                 if (friendlyUser.getPhotoUrl() == null) {
                     viewHolder.userImageView
                             .setImageDrawable(ContextCompat

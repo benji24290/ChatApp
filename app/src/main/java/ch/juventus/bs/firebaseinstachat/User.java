@@ -9,14 +9,16 @@ public class User {
     private String uid;
     private String email;
     private String photoUrl;
+    private String name;
 
     public User() {
     }
 
-    public User(String uid, String email, String photoUrl) {
+    public User(String uid, String email, String photoUrl, String name) {
         this.uid = uid;
         this.email = email;
         this.photoUrl = photoUrl;
+        this.name = name;
     }
 
     public String getUid() {
@@ -39,6 +41,14 @@ public class User {
 
     public void setPhotoUrl(String photoUrl) {
         this.photoUrl = photoUrl;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
 
