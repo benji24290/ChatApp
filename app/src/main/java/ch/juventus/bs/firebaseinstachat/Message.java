@@ -9,14 +9,16 @@ public class Message {
     private String text;
     private String name;
     private String photoUrl;
+    private String fromId;
 
     public Message() {
     }
 
-    public Message(String text, String name, String photoUrl) {
+    public Message(String text, String name, String photoUrl, String fromId) {
         this.text = text;
         this.name = name;
         this.photoUrl = photoUrl;
+        this.fromId = fromId;
     }
 
     public String getText() {
@@ -42,5 +44,12 @@ public class Message {
     public void setPhotoUrl(String photoUrl) {
         this.photoUrl = photoUrl;
     }
+
+    public String getFromId(){ return fromId; }
+
+    public void setFromId(String fromId) {
+        this.fromId = fromId;
+    }
+
 }
 
