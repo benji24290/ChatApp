@@ -21,6 +21,10 @@
         <activity
             android:name=".UserOverview"
             android:label="@string/title_activity_user_overview"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".privateChatActivity"
+            android:label="@string/title_activity_private_chat"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

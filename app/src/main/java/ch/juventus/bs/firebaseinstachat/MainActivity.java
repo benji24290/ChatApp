@@ -208,7 +208,13 @@ public class MainActivity extends AppCompatActivity
         mFirebaseDatabaseReference.child("user/"+user.getUid())
                 .setValue(user);
 
-        startActivity(new Intent(this, UserOverview.class));
+        /*startActivity(new Intent(this, UserOverview.class));
+        finish();*/
+        Intent intent = new Intent(this, privateChatActivity.class);
+        Bundle b = new Bundle();
+        b.putInt("key", 1); //Your id
+        intent.putExtras(b); //Put your id to your next Intent
+        startActivity(intent);
         finish();
         return;
     }
