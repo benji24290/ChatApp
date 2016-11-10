@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity
     private static final String TAG = "MainActivity";
     public static final String MESSAGES_CHILD = "messages";
     private static final int REQUEST_INVITE = 1;
-    public static final int DEFAULT_MSG_LENGTH_LIMIT = 10;
+    public static final int DEFAULT_MSG_LENGTH_LIMIT = 140;
     public static final String ANONYMOUS = "anonymous";
     private static final String MESSAGE_SENT_EVENT = "message_sent";
     private String mUsername;
