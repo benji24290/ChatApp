@@ -201,7 +201,8 @@ public class MainActivity extends AppCompatActivity
         //Create user
         User user = new
                 User(mFirebaseUser.getUid(),
-                mFirebaseUser.getEmail());
+                mFirebaseUser.getEmail(),
+                mFirebaseUser.getPhotoUrl().toString());
 
         mFirebaseDatabaseReference.child("user/"+user.getUid())
                 .setValue(user);
