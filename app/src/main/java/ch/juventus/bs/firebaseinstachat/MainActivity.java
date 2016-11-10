@@ -74,6 +74,8 @@ public class MainActivity extends AppCompatActivity
     private DatabaseReference mFirebaseDatabaseReference;
     private FirebaseRecyclerAdapter<Message, MessageViewHolder> mFirebaseAdapter;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,6 +87,7 @@ public class MainActivity extends AppCompatActivity
         // Initialize Firebase Auth
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseUser = mFirebaseAuth.getCurrentUser();
+
         if (mFirebaseUser == null) {
             // Not signed in, launch the Sign In activity
             startActivity(new Intent(this, SignInActivity.class));
@@ -95,6 +98,7 @@ public class MainActivity extends AppCompatActivity
             if (mFirebaseUser.getPhotoUrl() != null) {
                 mPhotoUrl = mFirebaseUser.getPhotoUrl().toString();
             }
+
         }
 
         mGoogleApiClient = new GoogleApiClient.Builder(this)
@@ -194,6 +198,12 @@ public class MainActivity extends AppCompatActivity
                 mMessageEditText.setText("");
             }
         });
+        User user = new
+                User(mFirebaseUser.getUid(),
+                mFirebaseUser.getEmail());
+
+        mFirebaseDatabaseReference.child("user")
+                .push().setValue(user);
     }
 
     @Override
