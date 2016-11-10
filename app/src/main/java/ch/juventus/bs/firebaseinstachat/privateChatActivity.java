@@ -1,5 +1,6 @@
 package ch.juventus.bs.firebaseinstachat;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -12,16 +13,15 @@ public class privateChatActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Intent intent = getIntent();
+        String uid = intent.getExtras().getString("uid");
         setContentView(R.layout.activity_private_chat);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("passedId");
+        toolbar.setTitle(uid);
         setSupportActionBar(toolbar);
 
         //get variable
-        Bundle b = getIntent().getExtras();
-        int value = 3; // or other values
-        if(b != null)
-            value = b.getInt("key");
+
 
      //   toolbar.setTitle("passedId");
 

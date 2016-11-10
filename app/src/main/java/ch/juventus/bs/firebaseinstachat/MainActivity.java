@@ -209,14 +209,12 @@ public class MainActivity extends AppCompatActivity
                 .setValue(user);
 
         /*startActivity(new Intent(this, UserOverview.class));
-        finish();*/
-        Intent intent = new Intent(this, privateChatActivity.class);
-        Bundle b = new Bundle();
-        b.putInt("key", 1); //Your id
-        intent.putExtras(b); //Put your id to your next Intent
-        startActivity(intent);
         finish();
-        return;
+        Intent i = new Intent(this, privateChatActivity.class);
+        i.putExtra("uid",mFirebaseUser.getUid()); //Your id
+        startActivity(i);
+        finish();
+        return;*/
     }
 
     @Override
@@ -257,6 +255,18 @@ public class MainActivity extends AppCompatActivity
                 mUsername = ANONYMOUS;
                 startActivity(new Intent(this, SignInActivity.class));
                 return true;
+            case R.id.private_chat:
+                Intent i = new Intent(this, privateChatActivity.class);
+                i.putExtra("uid",mFirebaseUser.getUid()); //Your id
+                startActivity(i);
+                finish();
+                return true;
+            case R.id.user_overview:
+                startActivity(new Intent(this, UserOverview.class));
+                finish();
+                return true;
+
+
             default:
                 return super.onOptionsItemSelected(item);
         }
