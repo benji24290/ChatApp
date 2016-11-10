@@ -198,6 +198,7 @@ public class MainActivity extends AppCompatActivity
                 mMessageEditText.setText("");
             }
         });
+        //Create user
         User user = new
                 User(mFirebaseUser.getUid(),
                 mFirebaseUser.getEmail());
