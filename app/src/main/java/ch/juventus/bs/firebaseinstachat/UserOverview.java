@@ -28,7 +28,6 @@ public class UserOverview extends AppCompatActivity {
     private ProgressBar mProgressBar;
     private LinearLayoutManager mLinearLayoutManager;
     private RecyclerView mMessageRecyclerView;
-    private Button userButton;
 
     public static class UserViewHolder extends RecyclerView.ViewHolder {
         public CircleImageView userImageView;
@@ -104,16 +103,6 @@ public class UserOverview extends AppCompatActivity {
 
         mMessageRecyclerView.setLayoutManager(mLinearLayoutManager);
         mMessageRecyclerView.setAdapter(mFirebaseAdapter);
-
-        userButton = (Button) findViewById(R.id.userButton);
-        userButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                startActivity(new Intent(UserOverview.this, MainActivity.class));
-                finish();
-            }
-        });
 
     }
 
