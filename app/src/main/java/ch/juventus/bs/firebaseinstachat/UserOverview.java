@@ -48,7 +48,7 @@ public class UserOverview extends AppCompatActivity {
 
 
         // Initialize ProgressBar and RecyclerView.
-        mMessageRecyclerView = (RecyclerView) findViewById(R.id.messageRecyclerView);
+        mMessageRecyclerView = (RecyclerView) findViewById(R.id.userRecyclerView);
         mLinearLayoutManager = new LinearLayoutManager(this);
         mLinearLayoutManager.setStackFromEnd(true);
         mMessageRecyclerView.setLayoutManager(mLinearLayoutManager);
