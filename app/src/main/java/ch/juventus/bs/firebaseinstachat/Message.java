@@ -10,15 +10,18 @@ public class Message {
     private String name;
     private String photoUrl;
     private String fromId;
+    private String toId;
 
     public Message() {
     }
 
-    public Message(String text, String name, String photoUrl, String fromId) {
+    public Message(String text, String name, String photoUrl, String fromId, String toId) {
         this.text = text;
         this.name = name;
         this.photoUrl = photoUrl;
         this.fromId = fromId;
+        this.toId = toId;
+
     }
 
     public String getText() {
@@ -50,6 +53,10 @@ public class Message {
     public void setFromId(String fromId) {
         this.fromId = fromId;
     }
+
+    public String getToId(){ return  toId; }
+
+    public void  setToId(String toId){ this.toId =toId; }
 
 }
 
