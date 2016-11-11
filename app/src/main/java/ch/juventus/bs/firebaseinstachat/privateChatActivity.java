@@ -78,7 +78,7 @@ public class privateChatActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Intent intent = getIntent();
-        String uid = intent.getExtras().getString("uid");
+        final String uid = intent.getExtras().getString("uid");
         setTitle(uid);
         // setContentView(R.layout.activity_private_chat);
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -113,32 +113,38 @@ public class privateChatActivity extends AppCompatActivity
             mLinearLayoutManager = new LinearLayoutManager(this);
             mLinearLayoutManager.setStackFromEnd(true);
             mMessageRecyclerView.setLayoutManager(mLinearLayoutManager);
-
+            //String estring = uid+"_"+mFirebaseUser.getUid();  +++++++++++++++++++String Für methode 2values
             // New child entries
             mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
             mFirebaseAdapter = new FirebaseRecyclerAdapter<Message,
                     MainActivity.MessageViewHolder>(
+
                     Message.class,
                     R.layout.item_message,
                     MainActivity.MessageViewHolder.class,
-                    mFirebaseDatabaseReference.child(MESSAGES_CHILD)) {
+                    mFirebaseDatabaseReference.child(MESSAGES_CHILD).orderByChild("fromId").equalTo(uid)){
+                    //mFirebaseDatabaseReference.child(MESSAGES_CHILD).orderByChild("fromId").equalTo(uid)) {
+                    //mFirebaseDatabaseReference.child(MESSAGES_CHILD).orderByChild("fromId_toId").equalTo(estring)) {
 
                 @Override
                 protected void populateViewHolder(MainActivity.MessageViewHolder viewHolder,
                                                   Message friendlyMessage, int position) {
                     mProgressBar.setVisibility(ProgressBar.INVISIBLE);
-                    viewHolder.messageTextView.setText(friendlyMessage.getText());
-                    viewHolder.messengerTextView.setText(friendlyMessage.getName());
-                    if (friendlyMessage.getPhotoUrl() == null) {
-                        viewHolder.messengerImageView
-                                .setImageDrawable(ContextCompat
-                                        .getDrawable(privateChatActivity.this,
-                                                R.drawable.ic_account_circle_black_36dp));
-                    } else {
-                        Glide.with(privateChatActivity.this)
-                                .load(friendlyMessage.getPhotoUrl())
-                                .into(viewHolder.messengerImageView);
-                    }
+
+
+                        viewHolder.messageTextView.setText(friendlyMessage.getText());
+                        viewHolder.messengerTextView.setText(friendlyMessage.getName());
+                        if (friendlyMessage.getPhotoUrl() == null) {
+                            viewHolder.messengerImageView
+                                    .setImageDrawable(ContextCompat
+                                            .getDrawable(privateChatActivity.this,
+                                                    R.drawable.ic_account_circle_black_36dp));
+                        } else {
+                            Glide.with(privateChatActivity.this)
+                                    .load(friendlyMessage.getPhotoUrl())
+                                    .into(viewHolder.messengerImageView);
+                        }
+
                 }
             };
 

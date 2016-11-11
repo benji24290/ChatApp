@@ -33,6 +33,7 @@ public class UserOverview extends AppCompatActivity {
         public CircleImageView userImageView;
         public Button userButton;
 
+
         public UserViewHolder(View v) {
             super(v);
             userButton = (Button) itemView.findViewById(R.id.userButton);
@@ -67,9 +68,33 @@ public class UserOverview extends AppCompatActivity {
 
             @Override
             protected void populateViewHolder(UserOverview.UserViewHolder viewHolder,
-                                              User friendlyUser, int position) {
+                                              final User friendlyUser, int position) {
                 mProgressBar.setVisibility(ProgressBar.INVISIBLE);
                 viewHolder.userButton.setText(friendlyUser.getName());
+                viewHolder.userButton.setTag(friendlyUser.getUid());
+                viewHolder.userButton.setOnClickListener(new View.OnClickListener(){
+                    @Override
+                    public void onClick(View v) {
+                        Intent i = new Intent(UserOverview.this, privateChatActivity.class);
+                        i.putExtra("uid",friendlyUser.getUid()); //Your id
+                        startActivity(i);
+                        finish();
+                        return;
+                    }
+                });
+                /*
+                uButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent i = new Intent(UserOverview.this, privateChatActivity.class);
+                        i.putExtra("uid",friendlyUser.getName()); //Your id
+                        startActivity(i);
+                        finish();
+                        return;
+                    }
+                });*/
+
+
                 if (friendlyUser.getPhotoUrl() == null) {
                     viewHolder.userImageView
                             .setImageDrawable(ContextCompat
@@ -103,6 +128,9 @@ public class UserOverview extends AppCompatActivity {
 
         mMessageRecyclerView.setLayoutManager(mLinearLayoutManager);
         mMessageRecyclerView.setAdapter(mFirebaseAdapter);
+
+
+
 
 
     }
