@@ -125,7 +125,7 @@ public class privateChatActivity extends AppCompatActivity
             mLinearLayoutManager = new LinearLayoutManager(this);
             mLinearLayoutManager.setStackFromEnd(true);
             mMessageRecyclerView.setLayoutManager(mLinearLayoutManager);
-            //String estring = uid+"_"+mFirebaseUser.getUid(); // +++++++++++++++++++String Für methode 2values
+
             // New child entries
             mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
             mFirebaseAdapter = new FirebaseRecyclerAdapter<Message,
@@ -134,9 +134,11 @@ public class privateChatActivity extends AppCompatActivity
                     Message.class,
                     R.layout.item_message,
                     MainActivity.MessageViewHolder.class,
-                    mFirebaseDatabaseReference.child(MESSAGES_CHILD).orderByChild("toId").equalTo(uid)){
-                    //mFirebaseDatabaseReference.child(MESSAGES_CHILD).orderByChild("fromId").equalTo(uid)) {
-                    //mFirebaseDatabaseReference.child(MESSAGES_CHILD).orderByChild("fromId_toId").equalTo(estring)) {
+                    //Nachrichten von Mir zu partner
+                    mFirebaseDatabaseReference.child(MESSAGES_CHILD).orderByChild("fromId_toId").equalTo(mFirebaseUser.getUid()+"_"+uid)){
+                    //Nachrichten von partner zu mir
+                    //mFirebaseDatabaseReference.child(MESSAGES_CHILD).orderByChild("fromId_toId").equalTo(uid+"_"+mFirebaseUser.getUid())){
+
 
                 @Override
                 protected void populateViewHolder(MainActivity.MessageViewHolder viewHolder,
@@ -213,7 +215,7 @@ public class privateChatActivity extends AppCompatActivity
                     Message message = new
                             Message(mMessageEditText.getText().toString(),
                             mUsername,
-                            mPhotoUrl, mFirebaseUser.getUid(),uid);
+                            mPhotoUrl, mFirebaseUser.getUid(),uid,mFirebaseUser.getUid()+"_"+uid);
                     mFirebaseDatabaseReference.child(MESSAGES_CHILD)
                             .push().setValue(message);
                     mMessageEditText.setText("");

@@ -11,16 +11,18 @@ public class Message {
     private String photoUrl;
     private String fromId;
     private String toId;
+    private String fromId_toId;
 
     public Message() {
     }
 
-    public Message(String text, String name, String photoUrl, String fromId, String toId) {
+    public Message(String text, String name, String photoUrl, String fromId, String toId, String fromId_toId) {
         this.text = text;
         this.name = name;
         this.photoUrl = photoUrl;
         this.fromId = fromId;
         this.toId = toId;
+        this.fromId_toId = fromId_toId;
 
     }
 
@@ -56,7 +58,11 @@ public class Message {
 
     public String getToId(){ return  toId; }
 
-    public void  setToId(String toId){ this.toId =toId; }
+    public void  setToId(String toId){ this.toId = toId; }
+
+    public String getFromId_toId(){return fromId_toId;}
+
+    public  void setFromId_toId(String fromId_toId){ this.fromId_toId = fromId_toId; }
 
 }
 

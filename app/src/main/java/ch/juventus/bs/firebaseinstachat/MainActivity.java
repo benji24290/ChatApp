@@ -192,7 +192,7 @@ public class MainActivity extends AppCompatActivity
                 Message message = new
                         Message(mMessageEditText.getText().toString(),
                         mUsername,
-                        mPhotoUrl,mFirebaseUser.getUid(),"GlobalChat");
+                        mPhotoUrl,mFirebaseUser.getUid(),"GlobalChat",mFirebaseUser.getUid()+"_GlobalChat");
                 mFirebaseDatabaseReference.child(MESSAGES_CHILD)
                         .push().setValue(message);
                 mMessageEditText.setText("");
