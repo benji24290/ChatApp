@@ -72,6 +72,7 @@ public class privateChatActivity extends AppCompatActivity
     private FirebaseUser mFirebaseUser;
     private DatabaseReference mFirebaseDatabaseReference;
     private FirebaseRecyclerAdapter<Message, MainActivity.MessageViewHolder> mFirebaseAdapter;
+    private FirebaseRecyclerAdapter<Message, MainActivity.MessageViewHolder> mFirebaseAdapter2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +81,7 @@ public class privateChatActivity extends AppCompatActivity
         Intent intent = getIntent();
         final String uid = intent.getExtras().getString("uid");
         setTitle(uid);
+        //setTitle(name);
         // setContentView(R.layout.activity_private_chat);
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         // Set default username is anonymous.
@@ -122,7 +124,7 @@ public class privateChatActivity extends AppCompatActivity
                     Message.class,
                     R.layout.item_message,
                     MainActivity.MessageViewHolder.class,
-                    mFirebaseDatabaseReference.child(MESSAGES_CHILD).orderByChild("fromId").equalTo(uid)){
+                    mFirebaseDatabaseReference.child(MESSAGES_CHILD).orderByChild("toId").equalTo(uid)){
                     //mFirebaseDatabaseReference.child(MESSAGES_CHILD).orderByChild("fromId").equalTo(uid)) {
                     //mFirebaseDatabaseReference.child(MESSAGES_CHILD).orderByChild("fromId_toId").equalTo(estring)) {
 
@@ -134,7 +136,8 @@ public class privateChatActivity extends AppCompatActivity
 
                         viewHolder.messageTextView.setText(friendlyMessage.getText());
                         viewHolder.messengerTextView.setText(friendlyMessage.getName());
-                        if (friendlyMessage.getPhotoUrl() == null) {
+
+                    if (friendlyMessage.getPhotoUrl() == null) {
                             viewHolder.messengerImageView
                                     .setImageDrawable(ContextCompat
                                             .getDrawable(privateChatActivity.this,
@@ -147,6 +150,7 @@ public class privateChatActivity extends AppCompatActivity
 
                 }
             };
+
 
             mFirebaseAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
                 @Override
@@ -165,6 +169,7 @@ public class privateChatActivity extends AppCompatActivity
                     }
                 }
             });
+
 
             mMessageRecyclerView.setLayoutManager(mLinearLayoutManager);
             mMessageRecyclerView.setAdapter(mFirebaseAdapter);
