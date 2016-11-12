@@ -75,8 +75,13 @@ public class UserOverview extends AppCompatActivity {
                 viewHolder.userButton.setOnClickListener(new View.OnClickListener(){
                     @Override
                     public void onClick(View v) {
+                        //Intent i = new Intent(UserOverview.this, privateChatActivity.class);
+                        //i.putExtra("user",friendlyUser.getUid()); //Your id
                         Intent i = new Intent(UserOverview.this, privateChatActivity.class);
-                        i.putExtra("uid",friendlyUser.getUid()); //Your id
+                        Bundle extras = new Bundle();
+                        extras.putString("partnerId",friendlyUser.getUid());
+                        extras.putString("partnerName",friendlyUser.getName());
+                        i.putExtras(extras);
                         startActivity(i);
                         finish();
                         return;

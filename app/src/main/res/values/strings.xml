@@ -3,10 +3,10 @@
     <string name="welcome_msg">Welcome!</string>
     <string name="sign_out">Sign Out</string>
     <string name="contacts_permission_rationale">Access to account information is required to sign in.</string>
-    <string name="invite_menu_label">Private Chat</string>
+    <string name="invite_menu_label">Empty</string>
     <string name="invitation_message">Please join me for a friendly chat</string>
     <string name="invitation_cta">Call to action</string>
-    <string name="invitation_title">Private Chat</string>
+    <string name="invitation_title">Empty</string>
     <string name="sign_in">Sign In</string>
     <string name="sign_up">Sign Up</string>
     <string name="fresh_config">User Overview</string>

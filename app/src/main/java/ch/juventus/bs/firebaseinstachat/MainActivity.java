@@ -255,12 +255,7 @@ public class MainActivity extends AppCompatActivity
                 mUsername = ANONYMOUS;
                 startActivity(new Intent(this, SignInActivity.class));
                 return true;
-            case R.id.private_chat:
-                Intent i = new Intent(this, privateChatActivity.class);
-                i.putExtra("uid",mFirebaseUser.getUid()); //Your id
-                startActivity(i);
-                finish();
-                return true;
+
             case R.id.user_overview:
                 startActivity(new Intent(this, UserOverview.class));
                 finish();

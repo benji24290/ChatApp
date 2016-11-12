@@ -30,10 +30,15 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+
+import static android.R.attr.value;
 
 
 public class privateChatActivity extends AppCompatActivity
@@ -78,10 +83,14 @@ public class privateChatActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Intent intent = getIntent();
-        final String uid = intent.getExtras().getString("uid");
-        setTitle(uid);
-        //setTitle(name);
+        //Intent intent = getIntent();
+        Bundle extras = getIntent().getExtras();
+        final String uid = extras.getString("partnerId");
+        final String uName = extras.getString("partnerName");
+        //final String uid = intent.getExtras().getString("uid");
+
+        setTitle(uName);
+
         // setContentView(R.layout.activity_private_chat);
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         // Set default username is anonymous.
@@ -90,6 +99,7 @@ public class privateChatActivity extends AppCompatActivity
         // Initialize Firebase Auth
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseUser = mFirebaseAuth.getCurrentUser();
+
 
         if (mFirebaseUser == null) {
             // Not signed in, launch the Sign In activity
@@ -115,7 +125,7 @@ public class privateChatActivity extends AppCompatActivity
             mLinearLayoutManager = new LinearLayoutManager(this);
             mLinearLayoutManager.setStackFromEnd(true);
             mMessageRecyclerView.setLayoutManager(mLinearLayoutManager);
-            //String estring = uid+"_"+mFirebaseUser.getUid();  +++++++++++++++++++String Für methode 2values
+            //String estring = uid+"_"+mFirebaseUser.getUid(); // +++++++++++++++++++String Für methode 2values
             // New child entries
             mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
             mFirebaseAdapter = new FirebaseRecyclerAdapter<Message,
@@ -203,7 +213,7 @@ public class privateChatActivity extends AppCompatActivity
                     Message message = new
                             Message(mMessageEditText.getText().toString(),
                             mUsername,
-                            mPhotoUrl, mFirebaseUser.getUid(),getTitle().toString());
+                            mPhotoUrl, mFirebaseUser.getUid(),uid);
                     mFirebaseDatabaseReference.child(MESSAGES_CHILD)
                             .push().setValue(message);
                     mMessageEditText.setText("");
@@ -243,12 +253,6 @@ public class privateChatActivity extends AppCompatActivity
                 Auth.GoogleSignInApi.signOut(mGoogleApiClient);
                 mUsername = ANONYMOUS;
                 startActivity(new Intent(this, SignInActivity.class));
-                return true;
-            case R.id.private_chat:
-                Intent i = new Intent(this, privateChatActivity.class);
-                i.putExtra("uid", mFirebaseUser.getUid()); //Your id
-                startActivity(i);
-                finish();
                 return true;
             case R.id.user_overview:
                 startActivity(new Intent(this, UserOverview.class));
