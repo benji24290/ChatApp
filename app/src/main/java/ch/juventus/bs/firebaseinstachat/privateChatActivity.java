@@ -117,22 +117,22 @@ public class privateChatActivity extends AppCompatActivity
         }
         //-------------privateChatIds kleinere id, dann grössere
         final String privateChatIds;
-        int compare = uid.compareTo(mFirebaseUser.getUid());
-        if (compare < 0)
-        {
-            //uid is smaller
-            privateChatIds = uid+"_"+mFirebaseUser.getUid();
-        }
-        else
-        {
-            if (compare > 0){
-            //uid is larger
-                privateChatIds = mFirebaseUser.getUid()+"_"+uid;
-            }else
-            {
-            //uid is equal to getuid
-                privateChatIds = mFirebaseUser.getUid()+"_"+uid;
+        if(uid.contentEquals("global")){
+            privateChatIds = "global";
+        }else {
+            int compare = uid.compareTo(mFirebaseUser.getUid());
+            if (compare < 0) {
+                //uid is smaller
+                privateChatIds = uid + "_" + mFirebaseUser.getUid();
+            } else {
+                if (compare > 0) {
+                    //uid is larger
+                    privateChatIds = mFirebaseUser.getUid() + "_" + uid;
+                } else {
+                    //uid is equal to getuid
+                    privateChatIds = mFirebaseUser.getUid() + "_" + uid;
 
+                }
             }
         }
     mGoogleApiClient = new GoogleApiClient.Builder(this)

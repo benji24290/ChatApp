@@ -100,7 +100,8 @@ public class MainActivity extends AppCompatActivity
             }
 
         }
-
+        startActivity(new Intent(this, UserOverview.class));
+        finish();
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .enableAutoManage(this /* FragmentActivity */, this /* OnConnectionFailedListener */)
                 .addApi(Auth.GOOGLE_SIGN_IN_API)
