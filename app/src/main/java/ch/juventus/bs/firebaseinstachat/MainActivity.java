@@ -120,7 +120,7 @@ public class MainActivity extends AppCompatActivity
                 Message.class,
                 R.layout.item_message,
                 MessageViewHolder.class,
-                mFirebaseDatabaseReference.child(MESSAGES_CHILD)) {
+                mFirebaseDatabaseReference.child(MESSAGES_CHILD+"/global")) {
 
             @Override
             protected void populateViewHolder(MessageViewHolder viewHolder,
@@ -193,7 +193,7 @@ public class MainActivity extends AppCompatActivity
                         Message(mMessageEditText.getText().toString(),
                         mUsername,
                         mPhotoUrl,mFirebaseUser.getUid(),"GlobalChat",mFirebaseUser.getUid()+"_GlobalChat");
-                mFirebaseDatabaseReference.child(MESSAGES_CHILD)
+                mFirebaseDatabaseReference.child(MESSAGES_CHILD+"/global")
                         .push().setValue(message);
                 mMessageEditText.setText("");
             }

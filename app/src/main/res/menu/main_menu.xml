@@ -10,7 +10,7 @@
         android:title="@string/fresh_config"
         app:showAsAction="never"/>
     <item
-        android:id="@+id/private_chat"
+        android:id="@+id/global_chat"
         android:title="@string/invite_menu_label"
         app:showAsAction="never"/>
     <item

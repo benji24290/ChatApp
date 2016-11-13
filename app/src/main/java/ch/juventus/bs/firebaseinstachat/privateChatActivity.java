@@ -55,6 +55,7 @@ public class privateChatActivity extends AppCompatActivity
             messengerTextView = (TextView) itemView.findViewById(R.id.messengerTextView);
             messengerImageView = (CircleImageView) itemView.findViewById(R.id.messengerImageView);
         }
+
     }
 
     private static final String TAG = "MainActivity";
@@ -76,6 +77,7 @@ public class privateChatActivity extends AppCompatActivity
     private FirebaseAuth mFirebaseAuth;
     private FirebaseUser mFirebaseUser;
     private DatabaseReference mFirebaseDatabaseReference;
+    private DatabaseReference mMyFirebaseDatabaseReference;
     private FirebaseRecyclerAdapter<Message, MainActivity.MessageViewHolder> mFirebaseAdapter;
     private FirebaseRecyclerAdapter<Message, MainActivity.MessageViewHolder> mFirebaseAdapter2;
 
@@ -113,142 +115,166 @@ public class privateChatActivity extends AppCompatActivity
             }
 
         }
+        //-------------privateChatIds kleinere id, dann grössere
+        final String privateChatIds;
+        int compare = uid.compareTo(mFirebaseUser.getUid());
+        if (compare < 0)
+        {
+            //uid is smaller
+            privateChatIds = uid+"_"+mFirebaseUser.getUid();
+        }
+        else
+        {
+            if (compare > 0){
+            //uid is larger
+                privateChatIds = mFirebaseUser.getUid()+"_"+uid;
+            }else
+            {
+            //uid is equal to getuid
+                privateChatIds = mFirebaseUser.getUid()+"_"+uid;
 
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
+            }
+        }
+    mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .enableAutoManage(this /* FragmentActivity */, this /* OnConnectionFailedListener */)
                 .addApi(Auth.GOOGLE_SIGN_IN_API)
                 .build();
 
-            // Initialize ProgressBar and RecyclerView.
-            mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
-            mMessageRecyclerView = (RecyclerView) findViewById(R.id.messageRecyclerView);
-            mLinearLayoutManager = new LinearLayoutManager(this);
-            mLinearLayoutManager.setStackFromEnd(true);
-            mMessageRecyclerView.setLayoutManager(mLinearLayoutManager);
+        // Initialize ProgressBar and RecyclerView.
+        mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
+        mMessageRecyclerView = (RecyclerView) findViewById(R.id.messageRecyclerView);
+        mLinearLayoutManager = new LinearLayoutManager(this);
+        mLinearLayoutManager.setStackFromEnd(true);
+        mMessageRecyclerView.setLayoutManager(mLinearLayoutManager);
 
-            // New child entries
-            mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
-            mFirebaseAdapter = new FirebaseRecyclerAdapter<Message,
-                    MainActivity.MessageViewHolder>(
+        // New child entries
+        mMyFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
+        mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
+        mFirebaseAdapter = new FirebaseRecyclerAdapter<Message,
+                MainActivity.MessageViewHolder>(
 
-                    Message.class,
-                    R.layout.item_message,
-                    MainActivity.MessageViewHolder.class,
-                    //Nachrichten von Mir zu partner
-                    mFirebaseDatabaseReference.child(MESSAGES_CHILD).orderByChild("fromId_toId").equalTo(mFirebaseUser.getUid()+"_"+uid)){
-                    //Nachrichten von partner zu mir
-                    //mFirebaseDatabaseReference.child(MESSAGES_CHILD).orderByChild("fromId_toId").equalTo(uid+"_"+mFirebaseUser.getUid())){
-
-
-                @Override
-                protected void populateViewHolder(MainActivity.MessageViewHolder viewHolder,
-                                                  Message friendlyMessage, int position) {
-                    mProgressBar.setVisibility(ProgressBar.INVISIBLE);
+                Message.class,
+                R.layout.item_message,
+                MainActivity.MessageViewHolder.class,
+                //Nachrichten von Mir zu partner
+                mFirebaseDatabaseReference.child(MESSAGES_CHILD+"/"+privateChatIds)) {
+            //Nachrichten von partner zu mir
+            //mFirebaseDatabaseReference.child(MESSAGES_CHILD).orderByChild("fromId_toId").equalTo(uid+"_"+mFirebaseUser.getUid())){
 
 
-                        viewHolder.messageTextView.setText(friendlyMessage.getText());
-                        viewHolder.messengerTextView.setText(friendlyMessage.getName());
-
-                    if (friendlyMessage.getPhotoUrl() == null) {
-                            viewHolder.messengerImageView
-                                    .setImageDrawable(ContextCompat
-                                            .getDrawable(privateChatActivity.this,
-                                                    R.drawable.ic_account_circle_black_36dp));
-                        } else {
-                            Glide.with(privateChatActivity.this)
-                                    .load(friendlyMessage.getPhotoUrl())
-                                    .into(viewHolder.messengerImageView);
-                        }
-
-                }
-            };
+            @Override
+            protected void populateViewHolder(MainActivity.MessageViewHolder viewHolder,
+                                              Message friendlyMessage, int position) {
+                mProgressBar.setVisibility(ProgressBar.INVISIBLE);
 
 
-            mFirebaseAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
-                @Override
-                public void onItemRangeInserted(int positionStart, int itemCount) {
-                    super.onItemRangeInserted(positionStart, itemCount);
-                    int friendlyMessageCount = mFirebaseAdapter.getItemCount();
-                    int lastVisiblePosition =
-                            mLinearLayoutManager.findLastCompletelyVisibleItemPosition();
-                    // If the recycler view is initially being loaded or the
-                    // user is at the bottom of the list, scroll to the bottom
-                    // of the list to show the newly added message.
-                    if (lastVisiblePosition == -1 ||
-                            (positionStart >= (friendlyMessageCount - 1) &&
-                                    lastVisiblePosition == (positionStart - 1))) {
-                        mMessageRecyclerView.scrollToPosition(positionStart);
-                    }
-                }
-            });
+                viewHolder.messageTextView.setText(friendlyMessage.getText());
+                viewHolder.messengerTextView.setText(friendlyMessage.getName());
 
-
-            mMessageRecyclerView.setLayoutManager(mLinearLayoutManager);
-            mMessageRecyclerView.setAdapter(mFirebaseAdapter);
-
-            mMessageEditText = (EditText) findViewById(R.id.messageEditText);
-            mMessageEditText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(140)});
-            mMessageEditText.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (friendlyMessage.getPhotoUrl() == null) {
+                    viewHolder.messengerImageView
+                            .setImageDrawable(ContextCompat
+                                    .getDrawable(privateChatActivity.this,
+                                            R.drawable.ic_account_circle_black_36dp));
+                } else {
+                    Glide.with(privateChatActivity.this)
+                            .load(friendlyMessage.getPhotoUrl())
+                            .into(viewHolder.messengerImageView);
                 }
 
-                @Override
-                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                    if (charSequence.toString().trim().length() > 0) {
-                        mSendButton.setEnabled(true);
-                    } else {
-                        mSendButton.setEnabled(false);
-                    }
+            }
+        };
+
+        //--------------------andere seite
+
+
+
+
+        mFirebaseAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onItemRangeInserted(int positionStart, int itemCount) {
+                super.onItemRangeInserted(positionStart, itemCount);
+                int friendlyMessageCount = mFirebaseAdapter.getItemCount();
+                int lastVisiblePosition =
+                        mLinearLayoutManager.findLastCompletelyVisibleItemPosition();
+                // If the recycler view is initially being loaded or the
+                // user is at the bottom of the list, scroll to the bottom
+                // of the list to show the newly added message.
+                if (lastVisiblePosition == -1 ||
+                        (positionStart >= (friendlyMessageCount - 1) &&
+                                lastVisiblePosition == (positionStart - 1))) {
+                    mMessageRecyclerView.scrollToPosition(positionStart);
                 }
+            }
+        });
 
-                @Override
-                public void afterTextChanged(Editable editable) {
+
+        mMessageRecyclerView.setLayoutManager(mLinearLayoutManager);
+        mMessageRecyclerView.setAdapter(mFirebaseAdapter);
+
+        mMessageEditText = (EditText) findViewById(R.id.messageEditText);
+        mMessageEditText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(140)});
+        mMessageEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (charSequence.toString().trim().length() > 0) {
+                    mSendButton.setEnabled(true);
+                } else {
+                    mSendButton.setEnabled(false);
                 }
-            });
+            }
 
-            mSendButton = (Button) findViewById(R.id.sendButton);
-            mSendButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
+            @Override
+            public void afterTextChanged(Editable editable) {
+            }
+        });
 
-                    Message message = new
-                            Message(mMessageEditText.getText().toString(),
-                            mUsername,
-                            mPhotoUrl, mFirebaseUser.getUid(),uid,mFirebaseUser.getUid()+"_"+uid);
-                    mFirebaseDatabaseReference.child(MESSAGES_CHILD)
-                            .push().setValue(message);
-                    mMessageEditText.setText("");
-                }
-            });
+        mSendButton = (Button) findViewById(R.id.sendButton);
+        mSendButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Message message = new
+                        Message(mMessageEditText.getText().toString(),
+                        mUsername,
+                        mPhotoUrl, mFirebaseUser.getUid(), uid, mFirebaseUser.getUid() + "_" + uid);
+                mFirebaseDatabaseReference.child(MESSAGES_CHILD+"/"+privateChatIds)
+                        .push().setValue(message);
+                mMessageEditText.setText("");
+            }
+        });
 
 
+    }
 
-        }
     @Override
-    public void onPause () {
+    public void onPause() {
         super.onPause();
     }
 
     @Override
-    public void onResume () {
+    public void onResume() {
         super.onResume();
     }
 
     @Override
-    public void onDestroy () {
+    public void onDestroy() {
         super.onDestroy();
     }
 
     @Override
-    public boolean onCreateOptionsMenu (Menu menu){
+    public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main_menu, menu);
         return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected (MenuItem item){
+    public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.sign_out_menu:
                 mFirebaseAuth.signOut();
@@ -260,6 +286,11 @@ public class privateChatActivity extends AppCompatActivity
                 startActivity(new Intent(this, UserOverview.class));
                 finish();
                 return true;
+            case R.id.global_chat:
+                startActivity(new Intent(this, MainActivity.class));
+                finish();
+                return true;
+
 
 
             default:
