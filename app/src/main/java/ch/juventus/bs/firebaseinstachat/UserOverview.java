@@ -83,7 +83,7 @@ public class UserOverview extends AppCompatActivity {
                         extras.putString("partnerName",friendlyUser.getName());
                         i.putExtras(extras);
                         startActivity(i);
-                        finish();
+
                         return;
                     }
                 });
