@@ -252,11 +252,13 @@ public class privateChatActivity extends AppCompatActivity
                 mFirebaseDatabaseReference.child(MESSAGES_CHILD+"/"+privateChatIds)
                         .push().setValue(message);
                 mMessageEditText.setText("");
-                Map notification = new HashMap<>();
-                notification.put("username", mFirebaseUser.getDisplayName());
-                notification.put("message", message.getText());
-                notification.put("targetToken",targetToken);
-                mFirebaseDatabaseReference.child("notificationRequests").push().setValue(notification);
+                if(targetToken != null) {
+                    Map notification = new HashMap<>();
+                    notification.put("username", mFirebaseUser.getDisplayName());
+                    notification.put("message", message.getText());
+                    notification.put("targetToken", targetToken);
+                    mFirebaseDatabaseReference.child("notificationRequests").push().setValue(notification);
+                }
             }
         });
 
