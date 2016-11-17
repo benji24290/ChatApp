@@ -36,8 +36,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import static android.R.attr.minDate;
 import static android.R.attr.value;
 
 
@@ -81,6 +85,8 @@ public class privateChatActivity extends AppCompatActivity
     private FirebaseRecyclerAdapter<Message, MainActivity.MessageViewHolder> mFirebaseAdapter;
     private FirebaseRecyclerAdapter<Message, MainActivity.MessageViewHolder> mFirebaseAdapter2;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,6 +95,7 @@ public class privateChatActivity extends AppCompatActivity
         Bundle extras = getIntent().getExtras();
         final String uid = extras.getString("partnerId");
         final String uName = extras.getString("partnerName");
+        final String targetToken = extras.getString("targetToken");
         //final String uid = intent.getExtras().getString("uid");
 
         setTitle(uName);
@@ -245,11 +252,17 @@ public class privateChatActivity extends AppCompatActivity
                 mFirebaseDatabaseReference.child(MESSAGES_CHILD+"/"+privateChatIds)
                         .push().setValue(message);
                 mMessageEditText.setText("");
+                Map notification = new HashMap<>();
+                notification.put("username", mFirebaseUser.getDisplayName());
+                notification.put("message", message.getText());
+                notification.put("targetToken",targetToken);
+                mFirebaseDatabaseReference.child("notificationRequests").push().setValue(notification);
             }
         });
 
 
     }
+
 
     @Override
     public void onPause() {
@@ -305,4 +318,5 @@ public class privateChatActivity extends AppCompatActivity
         Log.d(TAG, "onConnectionFailed:" + connectionResult);
         Toast.makeText(this, "Google Play Services error.", Toast.LENGTH_SHORT).show();
     }
+
 }

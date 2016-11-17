@@ -81,6 +81,7 @@ public class UserOverview extends AppCompatActivity {
                         Bundle extras = new Bundle();
                         extras.putString("partnerId",friendlyUser.getUid());
                         extras.putString("partnerName",friendlyUser.getName());
+                        extras.putString("targetToken",friendlyUser.getToken());
                         i.putExtras(extras);
                         startActivity(i);
 
