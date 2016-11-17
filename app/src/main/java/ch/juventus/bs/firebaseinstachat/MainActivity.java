@@ -32,6 +32,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -204,10 +206,16 @@ public class MainActivity extends AppCompatActivity
                 User(mFirebaseUser.getUid(),
                 mFirebaseUser.getEmail(),
                 mFirebaseUser.getPhotoUrl().toString(),
-                mUsername);
+                mUsername,FirebaseInstanceId.getInstance().getToken());
 
         mFirebaseDatabaseReference.child("user/"+user.getUid())
                 .setValue(user);
+
+        FirebaseMessaging.getInstance()
+                .subscribeToTopic("global");
+        FirebaseMessaging.getInstance()
+                .subscribeToTopic(mFirebaseUser.getUid());
+
 
         /*startActivity(new Intent(this, UserOverview.class));
         finish();

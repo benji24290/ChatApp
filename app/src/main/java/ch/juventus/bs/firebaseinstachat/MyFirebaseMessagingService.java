@@ -8,10 +8,11 @@ import android.util.Log;
 
 import com.google.firebase.messaging.RemoteMessage;
 
-public class FirebaseMessagingService {
+public class MyFirebaseMessagingService extends com.google.firebase.messaging.FirebaseMessagingService {
 
     private static final String TAG = "FMService";
 
+    @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         // Handle data payload of FCM messages.
         Log.d(TAG, "FCM Message Id: " + remoteMessage.getMessageId());
