@@ -2,8 +2,6 @@ package ch.juventus.bs.firebaseinstachat;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,7 +10,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -21,10 +18,10 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class UserOverview extends AppCompatActivity {
+public class UserOverviewActivity extends AppCompatActivity {
 
     private DatabaseReference mFirebaseDatabaseReference;
-    private FirebaseRecyclerAdapter<User, UserOverview.UserViewHolder> mFirebaseAdapter;
+    private FirebaseRecyclerAdapter<User, UserOverviewActivity.UserViewHolder> mFirebaseAdapter;
     private ProgressBar mProgressBar;
     private LinearLayoutManager mLinearLayoutManager;
     private RecyclerView mMessageRecyclerView;
@@ -60,14 +57,14 @@ public class UserOverview extends AppCompatActivity {
         // New child entries
         mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
         mFirebaseAdapter = new FirebaseRecyclerAdapter<User,
-                UserOverview.UserViewHolder>(
+                UserOverviewActivity.UserViewHolder>(
                 User.class,
                 R.layout.item_user,
-                UserOverview.UserViewHolder.class,
+                UserOverviewActivity.UserViewHolder.class,
                 mFirebaseDatabaseReference.child("user")) {
 
             @Override
-            protected void populateViewHolder(UserOverview.UserViewHolder viewHolder,
+            protected void populateViewHolder(UserOverviewActivity.UserViewHolder viewHolder,
                                               final User friendlyUser, int position) {
                 mProgressBar.setVisibility(ProgressBar.INVISIBLE);
                 viewHolder.userButton.setText(friendlyUser.getName());
@@ -75,9 +72,9 @@ public class UserOverview extends AppCompatActivity {
                 viewHolder.userButton.setOnClickListener(new View.OnClickListener(){
                     @Override
                     public void onClick(View v) {
-                        //Intent i = new Intent(UserOverview.this, privateChatActivity.class);
+                        //Intent i = new Intent(UserOverviewActivity.this, privateChatActivity.class);
                         //i.putExtra("user",friendlyUser.getUid()); //Your id
-                        Intent i = new Intent(UserOverview.this, privateChatActivity.class);
+                        Intent i = new Intent(UserOverviewActivity.this, privateChatActivity.class);
                         Bundle extras = new Bundle();
                         extras.putString("partnerId",friendlyUser.getUid());
                         extras.putString("partnerName",friendlyUser.getName());
@@ -92,7 +89,7 @@ public class UserOverview extends AppCompatActivity {
                 uButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent i = new Intent(UserOverview.this, privateChatActivity.class);
+                        Intent i = new Intent(UserOverviewActivity.this, privateChatActivity.class);
                         i.putExtra("uid",friendlyUser.getName()); //Your id
                         startActivity(i);
                         finish();
@@ -104,10 +101,10 @@ public class UserOverview extends AppCompatActivity {
                 if (friendlyUser.getPhotoUrl() == null) {
                     viewHolder.userImageView
                             .setImageDrawable(ContextCompat
-                                    .getDrawable(UserOverview.this,
+                                    .getDrawable(UserOverviewActivity.this,
                                             R.drawable.ic_account_circle_black_36dp));
                 } else {
-                    Glide.with(UserOverview.this)
+                    Glide.with(UserOverviewActivity.this)
                             .load(friendlyUser.getPhotoUrl())
                             .into(viewHolder.userImageView);
                 }

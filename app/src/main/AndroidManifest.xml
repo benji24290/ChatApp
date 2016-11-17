@@ -19,7 +19,7 @@
         </activity>
         <activity android:name=".SignInActivity" />
         <activity
-            android:name=".UserOverview"
+            android:name=".UserOverviewActivity"
             android:label="@string/title_activity_user_overview"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity

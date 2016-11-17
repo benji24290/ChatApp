@@ -30,19 +30,13 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-
-import static android.R.attr.minDate;
-import static android.R.attr.value;
 
 
 public class privateChatActivity extends AppCompatActivity
@@ -298,7 +292,7 @@ public class privateChatActivity extends AppCompatActivity
                 startActivity(new Intent(this, SignInActivity.class));
                 return true;
             case R.id.user_overview:
-                startActivity(new Intent(this, UserOverview.class));
+                startActivity(new Intent(this, UserOverviewActivity.class));
                 finish();
                 return true;
             case R.id.global_chat:

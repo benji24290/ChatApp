@@ -102,7 +102,7 @@ public class MainActivity extends AppCompatActivity
             }
 
         }
-        startActivity(new Intent(this, UserOverview.class));
+        startActivity(new Intent(this, UserOverviewActivity.class));
         finish();
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .enableAutoManage(this /* FragmentActivity */, this /* OnConnectionFailedListener */)
@@ -217,7 +217,7 @@ public class MainActivity extends AppCompatActivity
                 .subscribeToTopic(mFirebaseUser.getUid());
 
 
-        /*startActivity(new Intent(this, UserOverview.class));
+        /*startActivity(new Intent(this, UserOverviewActivity.class));
         finish();
         Intent i = new Intent(this, privateChatActivity.class);
         i.putExtra("uid",mFirebaseUser.getUid()); //Your id
@@ -266,7 +266,7 @@ public class MainActivity extends AppCompatActivity
                 return true;
 
             case R.id.user_overview:
-                startActivity(new Intent(this, UserOverview.class));
+                startActivity(new Intent(this, UserOverviewActivity.class));
                 finish();
                 return true;
 
